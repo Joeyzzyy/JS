@@ -70,7 +70,7 @@
                     </Typography>
                     <form className={classes.form} onSubmit={handleSubmit}>
                         <TextField
-                            label="互动回答文案（一行一个）"
+                            label="互动回答文案（一行一个，答案之间加空行隔开）"
                             value={answers}
                             onChange={(event) => setAnswers(event.target.value)}
                             margin="normal"
