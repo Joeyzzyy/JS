@@ -42,7 +42,11 @@
 
         const handleSubmit = (event) => {
             event.preventDefault();
-            setScript(answers.replace(/。/g, '\n'));
+            // Split the text into separate answers
+            let newAnswers = answers.split('\n\n');
+            // Remove line breaks within each answer and join the answers back together with a newline character in between
+            let formattedText = newAnswers.map(answer => answer.replace(/\n/g, ' ')).join('\n');
+            setScript(formattedText);
             setOpen(true);
         };
 
