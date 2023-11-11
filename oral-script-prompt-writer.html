@@ -170,6 +170,19 @@
                         <Button type="submit" variant="contained" color="primary" className={classes.submit}>
                             生成提示词
                         </Button>
+                        <Button onClick={() => {
+                            setBrandName('');
+                            setBrandDescription('');
+                            setProductName('');
+                            setProductDescription('');
+                            setOriginalScript('');
+                            setSelectedPlatform('');
+                            setCharacterNickname('');
+                        }} 
+                        color="secondary" 
+                        className={classes.submit}>
+                            清除输入
+                        </Button>
                     </form>
                     <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                         <DialogTitle id="form-dialog-title">提示词</DialogTitle>
