@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>互动文案-提示词生成</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+</head>
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@material-ui/core/umd/material-ui.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+    const {
+        React,
+        ReactDOM,
+        MaterialUI: { TextField, Button, Typography, Container, CssBaseline, makeStyles, Dialog, DialogTitle, DialogContent, DialogActions, IconButton },
+    } = window;
+
+    const useStyles = makeStyles((theme) => ({
+        paper: {
+            marginTop: theme.spacing(8),
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+        },
+        form: {
+            width: '100%', 
+            marginTop: theme.spacing(3),
+        },
+        submit: {
+            margin: theme.spacing(3, 0, 2),
+        },
+    }));
+
+    function ScriptForm() {
+        const classes = useStyles();
+        const [brandName, setBrandName] = React.useState('');
+        const [keywords, setKeywords] = React.useState('');
+        const [script, setScript] = React.useState('');
+        const [open, setOpen] = React.useState(false);
+
+        const handleSubmit = (event) => {
+            event.preventDefault();
+            const generatedScript = generateScript(brandName, keywords);
+            setScript(JSON.stringify(generatedScript, null, 2));
+            setOpen(true);
+        };
+
+        const handleClose = () => {
+            setOpen(false);
+        };
+
+        const handleCopy = () => {
+            navigator.clipboard.writeText(script);
+        };
+
+        const generateScript = (brandName, keywords) => {
+            var prompt = {
+                "Task": {
+                    "Objective": "Transform a product description for the " + brandName + " brand into engaging Q&A pairs for user engagement.",
+                    "Instructions": {
+                        "Instructions1": "Create Q&A pairs following the topics in the provided 'Hints' and strictly following the information provided in the uploaded docx file,",
+                        "Instructions2": "Place questions and answers in separate arrays within the 'Response' section, in the order they were created.",
+                        "Instructions3": "Write continuously without empty lines between Q&As for readability.",
+                        "Instructions4": "Avoid using the symbols / - { } in questions.",
+                        "Instructions5": "Each answer must be at least 100 Chinese characters long.",
+                        "Instructions6": "Generate content in the logical order of the 'Hints'.",
+                        "Instructions7": "Use 'EngagementSentences' in each answer.",
+                        "Instructions8": "Write questions in the first person.",
+                        "Instructions9": "Don't start the question with '主播'"
+                    },
+                    "EngagementSentences": [
+                        "来我们欢迎新进直播间的宝宝，还没点关注的宝贝记得先点下咱们左上方的关注。",
+                        "欢迎新进直播间的宝宝，大家有什么问题都可以问到主播的，那没点关注的宝宝可以先点个关注。",
+                        "来欢迎新进直播间的宝宝。",
+                        "没有点关注的宝宝，记得先点个关注。"
+                    ],
+                    "Hints": keywords.split('\n'),  // put keywords string into the Hints array
+                    "Response": {
+                        "Answers": []
+                    }
+                }
+            };
+            return prompt;
+            
+        };
+
+        return (
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <div className={classes.paper}>
+                    <Typography component="h1" variant="h5">
+                        互动文案-提示词生成
+                    </Typography>
+                    <form className={classes.form} onSubmit={handleSubmit}>
+                        <TextField
+                            label="品牌名称"
+                            value={brandName}
+                            onChange={(event) => setBrandName(event.target.value)}
+                            margin="normal"
+                            fullWidth
+                        />
+                        <TextField
+                            label="关键词（一行一个）"
+                            value={keywords}
+                            onChange={(event) => setKeywords(event.target.value)}
+                            margin="normal"
+                            fullWidth
+                            multiline
+                            rows={4}
+                        />
+                        <Button type="submit" variant="contained" color="primary" className={classes.submit}>
+                            生成提示词
+                        </Button>
+                    </form>
+                    <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                        <DialogTitle id="form-dialog-title">提示词</DialogTitle>
+                        <DialogContent>
+                            <Typography variant="body1" gutterBottom>
+                                {script}
+                            </Typography>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleCopy} color="primary">
+                                复制    
+                            </Button>
+                            <Button onClick={handleClose} color="primary">
+                                关闭
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                </div>
+            </Container>
+        );
+    }
+
+    ReactDOM.render(<ScriptForm />, document.getElementById('root'));
+    </script>
+</body>
+</html>
