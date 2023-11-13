@@ -85,11 +85,13 @@
                 },
                 "Task": {
                     "Objective": "假如你是个优秀的带货视频口播稿件创作者，你就根据所提供的产品名称，用途，产品特点等信息给你，生产出对应文本，每段字数不能少于500字。要求文本一定是口语化的，而且内容是极其吸引人的，因为最终文本是由主播来进行口播做成视频的。",
-                    "Requirements": {
-                        "Rule1": "Combine BrandName, BroadcastPlatform and EngagementSentences to generate a complete opening statement.",
-                        "Rule2": "Please strictly refer to the content in ProductOriginalScript, make appropriate deletions and adjustments, to achieve the most perfect broadcast effect for the entire script.",
-                        "Rule3": "Do not include Emojis in the generated script and do not need to divide the content into sections or segments, directly produce the entire content.",
-                        "Rule4": "Do not end the script with phrases indicating the end of the live broadcast, this is just a product pitch segment, try to end the script with guiding sales talk."
+                    "Instructions": {
+                        "Instruction1": "Putting the product features at the top of the spoken word script is also a very good way to start, and can be created in conjunction with an understanding of how the customer is likely to feel about using the product.",
+                        "Instruction2": "You can aso combine BrandName, BroadcastPlatform and EngagementSentences to generate a complete opening statement if needed.",
+                        "Instruction3": "It's a important learn your expressions from the excellentEngagementExample, that will greatly improve the qualtiy of the script",
+                        "Instruction4": "Please strictly refer to the content in ProductOriginalScript, make appropriate deletions and adjustments, to achieve the most perfect broadcast effect for the entire script.",
+                        "Instruction5": "Do not include Emojis in the generated script and do not need to divide the content into sections or segments, directly produce the entire content.",
+                        "Instruction6": "Do not end the script with phrases indicating the end of the live broadcast, this is just a product pitch segment, try to end the script with guiding sales talk."
                     },
                     "BroadcastPlatform": selectedPlatform,
                     "EngagementSentences": engagementSentencesWithNicknameStructure,
@@ -100,7 +102,6 @@
                     }
                 }
             };
-
             return prompt;
         };
 
